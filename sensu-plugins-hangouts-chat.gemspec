@@ -28,12 +28,13 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength
   s.add_runtime_dependency 'sensu-plugin', '~> 2.5'
 
   s.add_development_dependency 'bundler',                   '~> 1.7'
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.6'
   s.add_development_dependency 'github-markup',             '~> 1.3'
   s.add_development_dependency 'pry',                       '~> 0.10'
   s.add_development_dependency 'rake',                      '~> 10.5'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
   s.add_development_dependency 'rspec',                     '~> 3.4'
   s.add_development_dependency 'rubocop',                   '~> 0.59.2'
+  s.add_development_dependency 'simplecov',                 '~> 0.16'
+  s.add_development_dependency 'webmock',                   '~> 3.4'
   s.add_development_dependency 'yard',                      '~> 0.9.11'
 end
