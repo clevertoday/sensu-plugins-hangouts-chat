@@ -8,14 +8,14 @@ RSpec.describe HangoutsChat do # rubocop:disable Metrics/BlockLength
   let(:handler) do
     HangoutsChat.disable_autorun
     handler = HangoutsChat.new
-    allow(handler).to receive(:settings).and_return('hangouts_chat': { 'webhook_url': webhook_url })
+    allow(handler).to receive(:settings).and_return('hangouts_chat' => { 'webhook_url' => webhook_url })
     handler
   end
 
   let(:event) do
     {
-      'client': { 'name': 'test' },
-      'check': { 'name': 'test' },
+      'client' => { 'name' => 'test' },
+      'check' => { 'name' => 'test' },
       'occurrences': 1
     }
   end
