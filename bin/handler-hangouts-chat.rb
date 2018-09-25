@@ -8,16 +8,23 @@
 #
 
 require 'sensu-handler'
+require 'json'
 
 class HangoutsChat < Sensu::Handler
   option :json_config,
-         description: 'Configuration name',
+         description: 'Configuration key name',
          short: '-j JSONCONFIG',
          long: '--json JSONCONFIG',
          default: 'hangouts_chat'
 
+  option :webhook_url,
+         short: '-u WEBHOOK_URL',
+         description: 'The webhook url',
+         long: '--url WEBHOOK_URL',
+         default: nil
+
   def hangouts_chat_webhook_url
-    get_setting('webhook_url')
+    config[:webhook_url] || get_setting('webhook_url')
   end
 
   def get_setting(name)
@@ -41,8 +48,14 @@ class HangoutsChat < Sensu::Handler
     @event['check']['name']
   end
 
+  def incident_formated_message
+    {
+      'text' => "#{incident_key}: #{incident_description}"
+    }
+  end
+
   def handle
-    post_data("#{incident_key}: #{incident_description}")
+    post_data(JSON.generate(incident_formated_message))
   end
 
   def post_data(body)
