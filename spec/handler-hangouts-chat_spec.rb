@@ -15,12 +15,12 @@ RSpec.describe HangoutsChat do # rubocop:disable Metrics/BlockLength
   let(:event) do
     {
       'client' => { 'name' => 'test' },
-      'check' => { 'name' => 'test' },
+      'check' => { 'name' => 'test', 'output' => 'test' },
       'occurrences': 1
     }
   end
   let(:incident_key) { "#{event['client']['name']}/#{event['check']['name']}" }
-  let(:incident_description) { event['check']['name'] }
+  let(:incident_description) { event['check']['output'] }
   let(:formated_message) do
     { 'text' => "#{incident_key}: #{incident_description}" }
   end

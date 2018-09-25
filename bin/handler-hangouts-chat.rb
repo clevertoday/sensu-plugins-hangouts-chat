@@ -45,7 +45,7 @@ class HangoutsChat < Sensu::Handler
   end
 
   def incident_description
-    @event['check']['name']
+    @event['check']['output']
   end
 
   def incident_formated_message
