@@ -8,12 +8,20 @@ rvm:
 - 2.4.4
 - 2.5.1
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 script:
 - bundle exec rake default
 - gem build sensu-plugins-hangouts-chat.gemspec
 - gem install sensu-plugins-hangouts-chat-*.gem
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+deploy:
+  provider: rubygems
+  gem: sensu-plugins-hangouts-chat
+  api_key:
+    secure: HpGpFZGbIfXQngBjXo3A8gWzHyL9osWS74tfv7T1it50k9a4BY2yJCgPlmiU80m1B/7zzPvE3v5Vlfw63hR0ASDjDnX/Q3DgF5rEwzHmiKx2yyMUf29A+FZoK2tIdbBIb659JJ1+IKzXpafrDzA8nRGuKvHQ+/A0KNqiULL6435dEagnLDlcvuwTtnKlKxnvgBU88/DVDc9aFWbdR9q2m9I5NNWwWh1w5uk4Btuw+DM5nzRD82SfjigHJW0psHlcc/D7bAHLyWnBmqRIWYhA77z/RcHcqaf/CjUDQP5z7UjZUf1ycgQ0yYpktX+RgUFwI78wpK6ZhCiDOopcw+9elZs5/JpiCjoDfzZncGPLBDZEMLbAqtCTX0VPBKki2+DWtoGAhlXB4Y0cQh/D04sTTg+/SKbTd2IsVgezhpiv4p1fo9dQHpNc0z/C7CD8Sv7Fpmgv0SDq/aeTMuol6HIvbInfqrSo+WMO65RfONhiTPpkZkC66VN3I0QWFrhqbH7wpkruNUhzL4g04y2K6lO0IPCR6tb0VLiGvyHwjMzbNmmzeN6FR5JGawaDgvoCpF+nCtVX7n0AeGTwIKEt8/8kbDdgkS17JUntKaRCZX8DFRZTZr1T/oT6u7Qem0mDvCVADe/png6FSYUnAWK1JscKvNs4qC6KdR0dSXYWITbbLZI=
+  on:
+    tags: true
