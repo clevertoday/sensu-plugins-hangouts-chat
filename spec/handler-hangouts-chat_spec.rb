@@ -20,18 +20,27 @@ RSpec.describe HangoutsChat do # rubocop:disable Metrics/BlockLength
     }
   end
 
-  before(:each) do
-    stub_request(:post, /#{webhook_url}/)
-      .with(headers: { 'Accept': '*/*', 'User-Agent': 'Ruby' })
-      .to_return(status: 200, body: 'stubbed response', headers: {})
+  describe 'settings' do
+    it 'Should set the webhook_url correctly' do
+      expect(handler.hangouts_chat_webhook_url).to eq(webhook_url)
+    end
+
+    it 'Should return with a exit code 3 if the webhook_url is not set in config' do
+      allow(handler).to receive(:settings).and_return({})
+      expect { handler.hangouts_chat_webhook_url }.to exit_with_code(3)
+    end
   end
 
-  it 'Should set the webhook_url correctly' do
-    expect(handler.hangouts_chat_webhook_url).to eq(webhook_url)
-  end
+  describe 'webhook' do
+    before(:each) do
+      stub_request(:post, /#{webhook_url}/)
+        .with(headers: { 'Accept': '*/*', 'User-Agent': 'Ruby' })
+        .to_return(status: 200, body: 'stubbed response', headers: {})
+    end
 
-  it 'Send a message to the webhook when receive a event' do
-    handler.event = event
-    expect(handler.handle).to eq(true)
+    it 'Send a message to the webhook when receive a event' do
+      handler.event = event
+      expect(handler.handle).to eq(true)
+    end
   end
 end
