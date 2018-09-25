@@ -21,13 +21,25 @@ RSpec.describe HangoutsChat do # rubocop:disable Metrics/BlockLength
   end
 
   describe 'settings' do
-    it 'Should set the webhook_url correctly' do
+    it 'Set the webhook_url correctly' do
       expect(handler.hangouts_chat_webhook_url).to eq(webhook_url)
     end
 
-    it 'Should return with a exit code 3 if the webhook_url is not set in config' do
+    it 'Return with a exit code 3 if the webhook_url is not set in config' do
       allow(handler).to receive(:settings).and_return({})
       expect { handler.hangouts_chat_webhook_url }.to exit_with_code(3)
+    end
+  end
+
+  describe 'incident' do
+    it 'Define the incident_key correctly' do
+      handler.event = event
+      expect(handler.incident_key).to eq("#{event['client']['name']}/#{event['check']['name']}")
+    end
+
+    it 'Define the incident_description correctly' do
+      handler.event = event
+      expect(handler.incident_description).to eq(event['check']['name'])
     end
   end
 

@@ -37,9 +37,12 @@ class HangoutsChat < Sensu::Handler
     @event['client']['name'] + '/' + @event['check']['name']
   end
 
+  def incident_description
+    @event['check']['name']
+  end
+
   def handle
-    description = @event['check']['notification']
-    post_data("#{incident_key}: #{description}")
+    post_data("#{incident_key}: #{incident_description}")
   end
 
   def post_data(body)
